@@ -3,10 +3,10 @@
 # Documentation for the Class
 class CommentPolicy < ApplicationPolicy
   def create?
-    is_admin? || is_regular_user?
+    admin? || regular_user?
   end
 
   def destroy?
-    is_admin? || is_moderator?
+    admin? || moderator?
   end
 end

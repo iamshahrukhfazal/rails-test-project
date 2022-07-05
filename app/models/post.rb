@@ -16,7 +16,7 @@ class Post < ApplicationRecord
 
   enum status: { published: 0, unpublished: 1 }
 
-  scope :latest_posts, -> { where(status: Constants[:PUBLISHED]).order(updated_at: :desc).last(10) }
+  scope :latest_posts, -> { where(status:  CONSTANTS[:PUBLISHED]).order(updated_at: :desc).last(10) }
   scope :search_by_field_substring, lambda { |query|
     where('title ILIKE ?', "%#{query}%")
   }

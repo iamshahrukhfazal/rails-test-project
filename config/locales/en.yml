@@ -30,8 +30,11 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-
-
+  errors:
+    review: "Post Will be added After Reviews"
+    empty_feilds: "Post can't be Empty, Thank you!"
+    update_post: "Post was successfully updated."
+  
   # controllers:
   #   destroy:
   #     destroy_message: `%{type} was successfully destroyed.`
@@ -39,3 +42,5 @@ en:
   #     create_messge: `%{type} was successfully created.`
   #   update:
   #     update_message: `%{type} was successfully updated.`
+
+

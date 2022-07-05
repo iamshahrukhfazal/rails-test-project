@@ -10,7 +10,7 @@ class PostsController < ApplicationController
     authorize Post
 
     if current_user.role.eql? 'user'
-      @pagy, @posts = pagy(Post.where(status: Constants[:PUBLISHED]), items: 5)
+      @pagy, @posts = pagy(Post.where(status: CONSTANTS[:PUBLISHED]), items: 5)
     else
       @posts = Post.all
     end
@@ -27,6 +27,8 @@ class PostsController < ApplicationController
     authorize Post
   end
 
+  def edit; end
+
   # GET /posts/new
   def new
     authorize Post
@@ -42,8 +44,10 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
+        Rails.logger.debug 'save'
       else
         format.html { render :new, status: :unprocessable_entity }
+
       end
       format.js
     end
@@ -52,7 +56,7 @@ class PostsController < ApplicationController
   # PATCH/PUT /posts/1 or /posts/1.json
   def update
     respond_to do |format|
-      format.html { redirect_to post_url(@post), notice: 'Post was successfully updated.' } if @post.update(post_params)
+      format.html { redirect_to post_url(@post), notice: t('errors.update_post') } if @post.update(post_params)
       format.js
     end
   end

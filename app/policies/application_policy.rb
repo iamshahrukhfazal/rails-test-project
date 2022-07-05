@@ -9,15 +9,15 @@ class ApplicationPolicy
     @record = record
   end
 
-  def is_admin?
+  def admin?
     @user.admin?
   end
 
-  def is_regular_user?
+  def regular_user?
     @user.regular_user?
   end
 
-  def is_moderator?
+  def moderator?
     @user.moderator?
   end
 

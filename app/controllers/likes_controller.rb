@@ -8,7 +8,7 @@ class LikesController < ApplicationController
     @post = current_user.likes.new(like_params)
     respond_to do |format|
       if @post.save
-        @like_class = (@post.likeable.class.to_s).eql?(Constants[:COMMENT])
+        @like_class = (@post.likeable.class.to_s).eql?(CONSTANTS[:COMMENT])
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -17,7 +17,7 @@ class LikesController < ApplicationController
   end
 
   def destroy
-    @like_class = (@post.likeable.class.to_s).eql?(Constants[:COMMENT])
+    @like_class = (@post.likeable.class.to_s).eql?(CONSTANTS[:COMMENT])
     @post.destroy
     respond_to do |format|
       format.js

@@ -8,8 +8,8 @@ class Report < ApplicationRecord
 
   validates :report_status, presence: true
 
-  scope :reported_comment, -> { where(reportable_type: Constants[:COMMENT]) }
-  scope :reported_post, -> { where(reportable_type: Constants[:POST]) }
+  scope :reported_comment, -> { where(reportable_type: CONSTANTS[:COMMENT]) }
+  scope :reported_post, -> { where(reportable_type: CONSTANTS[:POST]) }
   scope :un_reported_status, -> { where.not(report_status: nil) }
   scope :user_reported_post, ->(id) { where(reportable_id: id) }
   scope :remove_post_duplicate, -> { select('DISTINCT ON (reportable_id) *').reported_post.un_reported_status }

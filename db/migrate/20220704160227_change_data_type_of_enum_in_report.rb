@@ -2,9 +2,17 @@
 
 # Documentation for the Class
 class ChangeDataTypeOfEnumInReport < ActiveRecord::Migration[5.2]
-  def change
-    remove_column :reports, :report_status
+  reversible do |dir|
+    change_table :reports, bulk: true do |t|
+      dir.up do
+        t.remove_column :report_status
+        t.add_column :report_status, :integer
+      end
 
-    add_column :reports, :report_status, :integer, default: 1
+      dir.down do
+        t.remove_column :report_status
+        t.add_column :report_status, :integer
+      end
+    end
   end
 end

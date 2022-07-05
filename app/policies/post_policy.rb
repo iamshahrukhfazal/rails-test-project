@@ -3,26 +3,26 @@
 # Documentation for the Class
 class PostPolicy < ApplicationPolicy
   def index?
-    is_admin? || is_regular_user? || is_moderator?
+    admin? ||    regular_user? ||    moderator?
   end
 
   def show?
-    is_admin? || is_regular_user? || is_moderator?
+    admin? ||    regular_user? ||    moderator?
   end
 
   def new?
-    is_admin? || is_regular_user?
+    admin? ||    regular_user?
   end
 
   def create?
-    is_admin? || is_regular_user?
+    admin? ||    regular_user?
   end
 
   def destroy?
-    is_admin? || is_moderator?
+    admin? ||    moderator?
   end
 
   def update?
-    is_admin? || is_moderator?
+    admin? ||    moderator?
   end
 end

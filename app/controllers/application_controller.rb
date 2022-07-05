@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
 
   add_flash_types :info, :danger, :warning
 
-  Constants = {
+  CONSTANTS = {
     PUBLISHED: 'published',
     UNPUBLISHED: 'unpublished',
     COMMENT: 'Comment',

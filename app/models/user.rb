@@ -16,6 +16,6 @@ class User < ApplicationRecord
   enum role: { regular_user: 0, moderator: 1, admin: 2 }
 
   def set_default_role
-    role ||= :user
+    role || :user
   end
 end

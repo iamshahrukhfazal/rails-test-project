@@ -4,7 +4,7 @@
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 
-  Constants = {
+  CONSTANTS = {
     PUBLISHED: 'published',
     UNPUBLISHED: 'unpublished',
     COMMENT: 'Comment',

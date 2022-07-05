@@ -4,7 +4,7 @@
 class Comment < ApplicationRecord
   belongs_to :user
   belongs_to :post
-  belongs_to :parent, class_name: Constants[:COMMENT], optional: true
+  belongs_to :parent, class_name:  CONSTANTS[:COMMENT].to_s, optional: true
 
   has_many :comments, foreign_key: 'parent_id', dependent: :destroy, inverse_of: :parent
   has_many :likes, as: :likeable, dependent: :destroy

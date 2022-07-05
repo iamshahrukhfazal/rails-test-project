@@ -3,18 +3,18 @@
 # Documentation for the Class
 class SuggestionPolicy < ApplicationPolicy
   def index?
-    is_admin? || is_regular_user? || is_moderator?
+    admin? ||    regular_user? || moderator?
   end
 
   def show?
-    is_admin? || is_regular_user?
+    admin? ||    regular_user?
   end
 
   def create?
-    is_admin? || is_regular_user?
+    admin? ||    regular_user?
   end
 
   def update?
-    is_admin? || is_regular_user?
+    admin? ||    regular_user?
   end
 end
