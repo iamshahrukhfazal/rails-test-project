@@ -3,6 +3,8 @@
 # Documentation for the Class
 class ChangeDataTypeOfEnumInSuggestion < ActiveRecord::Migration[5.2]
   def change
+    remove_column :suggestions, :status
+
     change_column :suggestions, :status, :integer, default: 1
   end
 end
