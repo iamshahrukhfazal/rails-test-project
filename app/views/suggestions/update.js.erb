@@ -1,0 +1,20 @@
+$("#suggestion_status_<%= @suggestion.id%>").empty().append("Status : <%= @suggestion.status%>")
+$("#suggestion_message_<%= @suggestion.id%>").empty().append(`
+     <%if @suggestion.message%>
+                            Reply by Post Owner:
+                            <br/>
+                            <%=@suggestion.message%>
+                        <%else%>
+                            <%= form_tag( suggestion_path(@suggestion) , remote: true) do |form| %>
+                                <div class="d-flex">
+                                    <div class="field">
+                                        <input type="text" name="suggestion[message]" value=""/>
+                                    </div>
+                                    <input type="hidden" name="_method" value="PATCH">
+                                    <div class="actions d-inline ml-4">
+                                        <input type="submit" value="Reply to Suggestion">
+                                    </div>
+                                </div>
+                            <% end %>
+            <%end%>
+`)

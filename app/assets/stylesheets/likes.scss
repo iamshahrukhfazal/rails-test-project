@@ -1,0 +1,22 @@
+// Place all the styles related to the likes controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.stright-line{
+    border: 1px solid rgba(46, 40, 40, 0.546);
+    height: 2rem;
+    margin-right: 1rem;
+    margin-left: 1rem;
+    border-radius: 10px;
+}
+
+.like-cnt{
+    position: relative;
+}
+
+.like-cnt-div{
+    position: absolute;
+    top: 5px;
+    left: 90px;
+}

@@ -1,0 +1,31 @@
+<div>
+    <div class="frame">
+  <div class="center">
+		<div class="profile">
+			<div class="image">
+				<div class="circle-1"></div>
+				<div class="circle-2"></div>
+				<img   src="https://thumbs.dreamstime.com/b/person-gray-photo-placeholder-man-costume-background-146157490.jpg" width="70" height="70" alt="Jessica Potter">
+			</div>
+			<div class="name"><%=current_user.email.split("@")[0]%></div>
+			<div class="actions">
+				<button class="btn"><%= link_to "Update Profile", edit_user_registration_path %></button>
+			</div>
+		</div>
+		<div class="stats">
+			<div class="box">
+				<span class="value"><%=@posts%></span>
+				<span class="parameter">Posts</span>
+			</div>
+			<div class="box">
+				<span class="value"><%=@likes%></span>
+				<span class="parameter">Likes</span>
+			</div>
+			<div class="box">
+				<span class="value"><%=@comments%></span>
+				<span class="parameter">Comments</span>
+			</div>
+		</div>
+  </div>
+</div>
+</div>

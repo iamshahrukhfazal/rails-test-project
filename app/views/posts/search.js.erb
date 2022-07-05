@@ -1,0 +1,9 @@
+$("#postSeachByUser").empty().append(`
+    <%if @posts.count===0%>
+            <div class="d-flex justify-content-center align-items-center alert alert-primary mt-10">
+                No Record Found
+            </div>  
+        <%else%>
+            <%= j render @posts.where(status: "published").order(updated_at: :desc)%> 
+        <%end%>
+`)

@@ -1,0 +1,75 @@
+// Place all the styles related to the suggestions controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.suggestion_containor{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 0;
+}
+.suggestion-card{
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    padding: 5rem;
+
+}
+.suggestion-border{
+    width: 100%;
+
+    border: 2px solid gray;
+}
+.suggestion_holder{
+    width: 50%;
+    border: .5px solid gray;
+    padding: 2rem 6rem;
+    margin-top: 2rem;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+.suggestion-heder{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.status-containor{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border: 1px solid gray;
+    padding: .5rem;
+    background-color: rgb(218, 83, 83);
+    padding: .5rem;
+    border-radius: 4px;
+    display: inline-block;
+    color: white;
+}
+select{
+    height: 2rem;
+    width: 10rem;
+}
+.suggestion-content{
+    margin: 2rem 0rem;
+}
+
+a{
+    list-style: none;
+    text-decoration: none;
+    color: black;
+}
+a:hover{
+    color: gary;
+    background-color: none;
+}
+.tags-custome{
+    background-color: rgb(113, 165, 208);
+    padding: .5rem;
+    border-radius: 4px;
+    display: inline-block;
+    color: white;
+}
+
+.nav-tags{
+    background-color: rgb(113, 165, 208);
+    padding: .5rem;
+    border-radius: 4px;
+    display: inline-block;
+    color: white;
+}

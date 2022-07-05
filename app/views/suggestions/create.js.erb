@@ -1,0 +1,7 @@
+$("#suggestionModalCenter").modal("hide");
+<%if @suggestion.errors.full_messages.length>0%>
+    $("#post-message").empty().append("<div>Suggestion can't be Empty, Thank you!</div>")
+<%else%>
+    $("#post_suggeston_count").empty().append(`<%= @post.suggestions.count%> Suggestion`);
+    $("#post-message").empty().append("<div>Suggestion Added</div>")
+<%end%>

@@ -1,0 +1,11 @@
+{
+  "name": "blog-app",
+  "private": true,
+  "dependencies": {
+    "@rails/webpacker": "5.4.3",
+    "actiontext": "https://github.com/kobaltz/actiontext"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^4.9.2"
+  }
+}

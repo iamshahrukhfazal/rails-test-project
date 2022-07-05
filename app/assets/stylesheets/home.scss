@@ -1,0 +1,174 @@
+.home{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.home-posts{
+    height: 100vh;
+    width: 40%;
+    background-color: goldenrod;
+}
+.home-left{
+    width: 40%;
+}
+.home-commets{
+    height: 50vh;
+    width: 100%;
+    background-color: rgb(37, 33, 23);
+}
+
+.home-likes{
+    height: 50vh;
+    width: 100%;
+    background-color: rgb(180, 180, 179);
+}
+
+.box-home{
+
+    width: 50vw;
+    margin: 1rem 0;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+a{
+	list-style: none;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:600,300);
+
+$brown: #215aaa;
+
+.frame {
+	position: absolute;
+	top: 50%;
+	left: 40%;
+	width: 700px;
+	height: 400px;
+	margin-top: -200px;
+	margin-left: -200px;
+	border-radius: 2px;
+	box-shadow: 1px 2px 10px 0px rgba(0, 0, 0, 0.3);
+	background: #215fa1;
+	background: -webkit-linear-gradient(bottom left, #4678be 0%, #0d59898c 100%);
+
+	background: linear-gradient(to top right, #4678be 0%, #0d59898c 100%);
+	color: $brown;
+
+}
+
+.center {
+	position: absolute;
+	top: 50px;
+	left: 180px;
+	height: 299px;
+	width: 360px;
+	background: #fff;
+	border-radius: 3px;
+	overflow: hidden;
+	box-shadow: 10px 10px 15px 0 rgba(0, 0, 0, 0.3);
+}
+
+.profile {
+	float: left;
+	width: 230px;
+	height: 320px;
+	text-align: center;
+
+
+	.image {
+		position: relative;
+		width: 70px;
+		height: 70px;
+		margin: 38px auto 0 auto;
+
+		img {
+			display: block;
+			border-radius: 50%;
+			background: #f5e8df;
+		}
+
+		
+	}
+
+	.name {
+		font-size: 15px;
+		font-weight: 600;
+		margin-top: 20px;
+	}
+
+	.job {
+		font-size: 11px;
+		line-height: 15px;
+	}
+
+	.actions {
+		margin-top: 33px;
+
+		.btn {
+			display: block;
+			width: 120px;
+			height: 30px;
+			margin: 0 auto 10px auto;
+			background: none;
+			
+			font-size: 12px;
+			font-weight: 600;
+			box-sizing: border-box;
+			transition: all 0.3s ease-in-out;
+		
+
+		
+		}
+	}
+}
+
+.stats {
+	float: left;
+
+	.box {
+		box-sizing: border-box;
+		width: 90px;
+		height: 99px;
+		background: #6697c5;
+		text-align: center;
+		padding-top: 28px;
+		transition: all 0.4s ease-in-out;
+
+		&:hover {
+			background: #f6f3f0;
+			cursor: pointer;
+		}
+
+		&:nth-child(2) {
+			margin: 1px 0;
+		}
+	}
+
+	span {
+		display: block;
+	}
+
+	.value {
+		font-size: 18px;
+		font-weight: 600;
+	}
+
+	.parameter {
+		font-size: 11px;
+	}
+}
+
+.tags-homes{
+	padding: 1rem;
+	background-color: #6697c5;
+	border-radius: 5px;
+	color: white;
+	width: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 3px;
+}

@@ -1,0 +1,17 @@
+// Place all the styles related to the comments controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.sub-comments{
+    padding-left: 40px;
+}
+.reply-box{
+    display: none;
+}
+
+.comment-btn-like-report{
+    display: flex;
+    border: 2px solid red;
+}
+.cursor-pointer{
+    cursor: pointer;
+  }

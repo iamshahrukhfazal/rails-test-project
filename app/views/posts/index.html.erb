@@ -1,0 +1,62 @@
+  <%if current_user.role === "regular_user"%>
+ <button type="button" class="btn btn-primary flex justify-center w-80 ml-3" data-toggle="modal" data-target="#exampleModalCenter">
+            Create New Post
+          </button>
+<%end%>
+<div class="d-flex justify-content-center ">
+       <%if current_user.role === "regular_user"%>
+          <input id="searchInput" onkeyup="debounce()"  class="searchposts mr-1" type="text" name="search" placeholder="Search..">
+          <%else%>
+        <%end%>     
+</div>
+<%if current_user.role==="regular_user"%>
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <%= render partial: "form", locals:{post:@post}%>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+<%end%>
+
+ <div id="post_containor">
+    <%if current_user.role === "moderator"%>
+        <%if @posts.count===0%>
+            <div class="d-flex justify-content-center align-items-center">
+                No Record Found
+            </div>  
+        <%else%>
+            <%= render @posts.where(status: "unpublished").order(updated_at: :desc)%>
+        <%end%> 
+    <%else%>
+       <div id="postSeachByUser">
+        <%if @posts.count===0%>
+            <div class="d-flex justify-content-center align-items-center alert alert-primary mt-10">
+                No Record Found
+            </div>  
+        <%else%>
+            <%= render @posts.where(status: "published").order(updated_at: :desc)%> 
+        <%end%> 
+       </div>
+    <%end%>
+ </div>
+
+<%if current_user.role === "regular_user"%>
+  <%
+=begin%>
+ <div class="d-flex justify-content-center"> <%== pagy_nav(@pagy) %></div> 
+<%
+=end%>
+<%end%>

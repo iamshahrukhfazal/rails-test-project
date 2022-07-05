@@ -1,0 +1,32 @@
+<div id="testing">
+    <div id="likecount_<%=likeable.id%>_<%=likeable.user.id %>" class="mb-2" >
+        <% like = current_user.likes.find_by(likeable:likeable)%>
+        <%if like.nil?%>
+            <%= form_tag( "/likes" , remote: true) do |f| %>
+                <input type="hidden" name="like[likeable_id]" value="<%= likeable.id%>">
+                <input type="hidden" name="like[likeable_type]" value="<%= likeable.class.to_s%>">
+                <div class="d-flex like-cnt">
+                    <div id="post_comment_<%=likeable.id%>" class="mr-2 like-cnt-div">
+                        <% likes=likeable.likes.count%>
+                        <%if likes>0%>
+                              <%=likes%>      
+                        <%else%>
+                            
+                        <%end%>
+                    </div>
+                    <input type="submit" value="like Me " class="btn btn-primary">
+                </div>
+            <% end %>
+            <%else%>
+                <%= form_tag(like_path(like) , remote: true) do |f| %>
+                <input type="hidden" name="_method" value="DELETE">
+                <div class="like-cnt" >
+                    <div id="post_comment_<%=likeable.id%>" class="mr-2 like-cnt-div">
+                        <%= likeable.likes.count%> 
+                    </div>
+                    <input type="submit" value="Unlike" class="btn btn-danger">
+                </div>
+            <% end %>
+        <%end%>
+    <div>    
+</div>

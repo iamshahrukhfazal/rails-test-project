@@ -1,0 +1,63 @@
+<div class="suggestion_holder">
+
+<%= link_to "View Post",post_path(suggestion.post) %> |
+<%= suggestion.updated_at.strftime('%m/%d/%Y')%> 
+
+<div class="suggestion-heder">
+ <div class="tags-custome">Suggestion By:</div> <%= suggestion.user.email%>  <div class="status-containor" id="suggestion_status_<%= suggestion.id%>"> Status :  <%= suggestion.status%></div>
+</div>   
+   <hr/>
+   <div class="suggestion-content">
+   <div class="tags-custome">Suggestion:</div> <%= suggestion.content%> 
+   </div>
+
+<div class="suggestion-content">
+   <%if suggestion.message %>
+     <div class="tags-custome">Post Owner Message:</div> <%= suggestion.message%> 
+     <%end%>
+</div>
+    <% if @is_user_post%>
+        <div class="update_post_suggestion_status_<%= suggestion.id%>">
+             <%= form_tag( suggestion_path(suggestion) , remote: true) do |form| %>
+                <div class="d-flex justify-content-between">
+                    <div class="field">
+                        <label>Select</label>
+                        <%= select_tag "suggestion[status]", options_for_select(Suggestion.statuses.map { |key, value| [key.humanize, key] }), class: "form-control" %>
+                    </div>
+                    <%
+=begin%>
+ <%= form.select :status, options_for_select(Post.statuses.map { |key, value| [key.humanize, key] }), {prompt: "Select Status"}, class: "form-control" %> 
+<%
+=end%>
+
+                    <input type="hidden" name="_method" value="PATCH">
+                    <div class="actions d-inline ml-4">
+                        <input type="submit" value="Update Suggestion Status" class="btn btn-primary">
+                    </div>
+                </div>
+            <% end %>
+            <div  id="suggestion_message_<%= suggestion.id%>">
+                    <%if suggestion.message%>
+                            <div class="tags-custome">Reply by Post Owner:</div>
+                            <br/>
+                            <%= suggestion.message%>
+                        <%else%>
+                            <%= form_tag( suggestion_path(suggestion) , remote: true) do |form| %>
+                                <div class="d-flex status-containor mb-1">
+                                    <div class="field">
+                                        <textarea class="w-100" type="text" name="suggestion[message]" value="" rows="5" cols="64"></textarea>
+                                    </div>
+                                    <input type="hidden" name="_method" value="PATCH">
+                                </div>
+                                <div class="actions ml-0">
+                                        <input type="submit" value="Reply to Suggestion" class="btn btn-primary w-100">
+                                </div>
+                            <% end %>
+            <%end%>
+            </div>
+        </div>
+    <%else%>
+        <div>
+        </div>
+    <%end%>
+</div>

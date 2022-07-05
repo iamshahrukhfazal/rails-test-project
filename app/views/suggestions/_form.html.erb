@@ -1,0 +1,11 @@
+<%= form_tag(post_suggestions_path(post), remote: true) do |form| %>
+  <div class="field">
+   <label>Post title:</label><br>
+   <textarea class="form-control" name="suggestion[content]" id="exampleFormControlTextarea1" rows="3"></textarea>
+  </div>
+   
+ <div class="actions">
+    <input type="submit" class ="btn btn-primary w-100" value="Save the Suggestion">
+  </div> 
+<% end %>
+

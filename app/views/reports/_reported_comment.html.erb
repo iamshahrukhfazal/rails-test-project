@@ -1,0 +1,69 @@
+<div id="reported_comment_<%= reported_comment.reportable.id%>" class="comment-card">
+    <%= render partial:"report_modal", locals:{report:reported_comment} %>
+    <div class="modal fade" id="exampleModal<%=reported_comment.reportable.id%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <% all_reportee = Report.user_reported_post(reported_comment.reportable_id)%>
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Reported By</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <%all_reportee.each do |user|%>
+
+                    <div class="reported-card">
+                        <img class="rounded-circle shadow-1-strong me-3 mr-2"
+                            src="https://thumbs.dreamstime.com/b/person-gray-photo-placeholder-man-costume-background-146157490.jpg" alt="avatar" width="60" height="60" />
+                        
+                        <p>
+                            <%= user.user.email%>
+                        <p> 
+                        <p>
+                            <%=time_ago_in_words(user.created_at) %>
+                        <p> 
+                    </div>
+                 
+                <%end%>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary w-100" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-2 d-flex justify-content-between align-items-center">
+        <div class="">
+                <img src="https://thumbs.dreamstime.com/b/person-gray-photo-placeholder-man-costume-background-146157490.jpg" class="rounded-circle" style="width: 50px;"
+                alt="Avatar" /> | 
+                Comment Of :: <%=reported_comment.user.email%>
+        </div>
+        <button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal<%=reported_comment.reportable.id%>">
+            Reported By
+        </button>
+        
+    </div>
+    <div class="reported-message-content mb-2">
+        <%=reported_comment.reportable.content%>
+    </div>
+    <div class="reported-comment-statuses">
+        <%statuses = reported_comment.reportable.reports.group(:report_status).size%>
+        
+
+        <%statuses.each do | item, price |%>
+            <button type="button" disabled class="btn btn-danger">
+                <%=item%> <span class="badge badge-light"><%= price%></span>
+                <span class="sr-only">unread messages</span>
+            </button>
+        <%end%>
+    </div>
+
+    <div class="mt-3">
+        <%= form_tag(comment_path(reported_comment.reportable) , remote: true) do |f| %>
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="submit" value="Delete" class="btn btn-danger w-100">
+        <% end %>
+    </div>
+</div>

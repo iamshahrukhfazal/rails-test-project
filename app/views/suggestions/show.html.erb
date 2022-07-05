@@ -1,0 +1,9 @@
+<%if @my_suggestion.count===0%>
+    <div class="d-flex justify-content-center align-items-center alert alert-primary mt-10">
+                No Record Found
+    </div> 
+<%else%>
+    <div class="d-flex justify-content-center align-items-center flex-column">
+        <%= render @my_suggestion %>
+    </div>
+<%end%>

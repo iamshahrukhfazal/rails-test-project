@@ -1,0 +1,19 @@
+<% like = current_user.reports.find_by(reportable:reportable)%>
+        <%if like.nil?%>
+            <%= form_with(url:reports_path, local: false) do |form| %>
+           <div class="d-flex mt-2 mb-2">    
+                <div class="field mr-2">
+                <%= form.select :report_status, options_for_select(Report.report_statuses.map { |key, value| [key.humanize, key] }), {prompt: "Select Status"}, class: "form-control" %>
+
+                   
+                </div>
+                <input type="hidden" name="report[reportable_id]" value=" <%=reportable.id %>">
+                <input type="hidden" name="report[reportable_type]" value="<%=reportable.class.to_s%>">
+                <div class="actions d-inline">
+                    <input type="submit" class="btn btn-primary p-1" value="Report <%=reportable.class.to_s%>">
+                </div>
+                </div>
+            <%end%>
+        <%else%>
+            <div></div>
+        <% end %>

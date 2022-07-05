@@ -1,0 +1,5 @@
+<%if @comment.errors.full_messages.length>0%>
+    $("#post-message").empty().append("<div>Comment can't be Empty, Thank you!</div>")
+<%else%>
+    $("#post_comment").empty().append("<%= j render @post.comments.where(parent_id: nil).order(id: :desc)%>");
+<%end%>

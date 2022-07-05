@@ -1,0 +1,31 @@
+  <div class="modal fade" id="exampleModal<%=report.reportable.id%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <% all_reportee = Report.user_reported_post(report.reportable_id).order(updated_at: :desc)%>
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Reported By</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <%all_reportee.each do |user|%>
+                    <div class="reported-card">
+                        <img class="rounded-circle shadow-1-strong me-3 mr-2"
+                            src="https://thumbs.dreamstime.com/b/person-gray-photo-placeholder-man-costume-background-146157490.jpg" alt="avatar" width="60" height="60" />
+                        <p>
+                            <%= user.user.email%>
+                        <p> 
+                        <p>
+                            <%=time_ago_in_words(user.created_at) %>
+                        <p> 
+                    </div>
+                 
+                <%end%>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary w-100" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+    </div>

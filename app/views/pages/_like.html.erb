@@ -1,0 +1,16 @@
+<div id="c_post_<%= like.id%>" class="comment-card d-flex">
+    <div class="d-flex justify-content-between">
+        <div class="tags-custome">
+                Liked By :  <%= like.user.email%>
+        </div>
+       <div class="d-flex ">
+            <div>
+                    Liked :  
+            </div>
+            <%= time_ago_in_words(like.updated_at).capitalize()%> ago
+        </div>
+     </div>
+    <div class="d-flex">
+      <a href="<%=post_path(like.post.id)%>" class="inline-block w-100"> <div class="mr-2 btn btn-primary w-100 mt-2" > View Like</div></a>
+    </div>
+</div>
