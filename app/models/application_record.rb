@@ -12,5 +12,3 @@ class ApplicationRecord < ActiveRecord::Base
     USER: 'user'
   }.freeze
 end
-
-# 

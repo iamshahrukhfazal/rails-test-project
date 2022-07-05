@@ -12,7 +12,6 @@ class Post < ApplicationRecord
   validates :content, presence: true
   validates :title, presence: true
 
-
   has_rich_text :content
 
   enum status: { published: 0, unpublished: 1 }
