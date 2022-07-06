@@ -16,7 +16,7 @@ class SuggestionsController < ApplicationController
     authorize Suggestion
     @suggestions = @post.suggestions
     # refactor
-    @is_user_post = @post.user === current_user
+    @is_user_post = @post.user == current_user
   end
 
   def create

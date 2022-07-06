@@ -3,8 +3,8 @@
 Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users
-  resource :users do 
-      get '/user_profile', to: 'users#user_profile'
+  resource :users do
+    get '/user_profile', to: 'users#user_profile'
   end
   resources :likes, only: %i[create destroy]
   resource :reports, only: %i[create destroy] do

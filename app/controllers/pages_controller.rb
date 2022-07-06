@@ -8,5 +8,4 @@ class PagesController < ApplicationController
     @posts = Post.latest
     @likes = Like.latest
   end
-
 end

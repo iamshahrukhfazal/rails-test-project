@@ -2,7 +2,7 @@
 
 class PostsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_post, only: %i[show edit update destroy]
+  before_action :set_post, only: %i[show update destroy]
   skip_before_action :verify_authenticity_token, only: %i[search]
 
   # GET /posts or /posts.json
@@ -23,7 +23,7 @@ class PostsController < ApplicationController
   end
 
   # def edit; end
-  
+
   def new
     authorize Post
     @post = current_user.posts.new
@@ -47,7 +47,6 @@ class PostsController < ApplicationController
     end
   end
 
-
   def update
     authorize Post
     respond_to do |format|
@@ -57,6 +56,8 @@ class PostsController < ApplicationController
   end
 
   def destroy
+    authorize Post
+
     @post.destroy
     respond_to do |format|
       format.js

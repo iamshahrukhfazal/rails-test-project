@@ -37,6 +37,7 @@ class ReportsController < ApplicationController
   end
 
   private
+
   def set_report
     @report = current_user.reports.find(params[:id])
   end

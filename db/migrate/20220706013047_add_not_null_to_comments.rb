@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddNotNullToComments < ActiveRecord::Migration[5.2]
   def change
     change_column :comments, :content, :string, null: false

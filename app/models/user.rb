@@ -16,6 +16,6 @@ class User < ApplicationRecord
   enum role: { regular_user: 0, moderator: 1, admin: 2 }
 
   def set_default_role
-      self.role = :regular_user if !role.nil?
+    self.role = :regular_user unless role.nil?
   end
 end

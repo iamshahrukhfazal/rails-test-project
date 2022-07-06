@@ -2,7 +2,6 @@
 
 # Documentation for the Class
 class ChangeDataTypeOfEnumInPost < ActiveRecord::Migration[5.2]
-  
   def change
     remove_column :posts, :status
     add_column :posts, :status, :integer, default: 1

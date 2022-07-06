@@ -7,7 +7,7 @@ class CreateSuggestions < ActiveRecord::Migration[5.2]
       t.string :content
       t.integer :status
       # change today
-      t.references :user, foreign_key: true, null:false 
+      t.references :user, foreign_key: true, null: false
       t.references :post
       t.timestamps
     end
