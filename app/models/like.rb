@@ -4,5 +4,5 @@
 class Like < ApplicationRecord
   belongs_to :user
   belongs_to :likeable, polymorphic: true
-  scope :latest_likes, -> { order(updated_at: :desc).last(10) }
+  scope :latest, -> { order(updated_at: :desc).last(10) }
 end

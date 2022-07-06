@@ -6,9 +6,9 @@ class CreateSuggestions < ActiveRecord::Migration[5.2]
     create_table :suggestions do |t|
       t.string :content
       t.integer :status
-      t.references :user, foreign_key: true
+      # change today
+      t.references :user, foreign_key: true, null:false 
       t.references :post
-
       t.timestamps
     end
     add_index :suggestions, [:id], unique: true

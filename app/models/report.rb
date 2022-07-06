@@ -8,12 +8,13 @@ class Report < ApplicationRecord
 
   validates :report_status, presence: true
 
-  scope :reported_comment, -> { where(reportable_type: CONSTANTS[:COMMENT]) }
-  scope :reported_post, -> { where(reportable_type: CONSTANTS[:POST]) }
+  scope :reported_comments, -> { where(reportable_type: CONSTANTS[:COMMENT]) }
+  scope :reported_posts, -> { where(reportable_type: CONSTANTS[:POST]) }
   scope :un_reported_status, -> { where.not(report_status: nil) }
-  scope :user_reported_post, ->(id) { where(reportable_id: id) }
-  scope :remove_post_duplicate, -> { select('DISTINCT ON (reportable_id) *').reported_post.un_reported_status }
-  scope :remove_comment_duplicate, -> { select('DISTINCT ON (reportable_id) *').reported_comment.un_reported_status }
+  scope :user_reported_posts, ->(id) { reported_posts.where(reportable_id: id) }
+  scope :user_reported_comments, ->(id) { reported_comments.where(reportable_id: id) }
+  scope :remove_post_duplicate, -> { select('DISTINCT ON (reportable_id) *').reported_posts.un_reported_status }
+  scope :remove_comment_duplicate, -> { select('DISTINCT ON (reportable_id) *').reported_comments.un_reported_status }
 
   enum report_status: { abusive: 0, under18: 1 }
 end

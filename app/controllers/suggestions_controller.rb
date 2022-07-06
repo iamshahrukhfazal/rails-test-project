@@ -8,19 +8,22 @@ class SuggestionsController < ApplicationController
 
   def show
     authorize Suggestion
-    @my_suggestion = Suggestion.user_suggestions(current_user.id)
+    # refactoring
+    @my_suggestion = current_user.suggestions
   end
 
   def index
     authorize Suggestion
     @suggestions = @post.suggestions
-    @is_user_post = (@post.user.id).eql? current_user.id
+    # refactor
+    @is_user_post = @post.user === current_user
   end
 
   def create
     authorize Suggestion
     @suggestion = current_user.suggestions.new(suggestion_params)
-    @suggestion.status = 0
+    # refactor
+    @suggestion.status = :pending
     respond_to do |format|
       if @suggestion.save
         @post = @suggestion.post

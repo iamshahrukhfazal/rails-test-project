@@ -4,9 +4,9 @@
 class Comment < ApplicationRecord
   belongs_to :user
   belongs_to :post
-  belongs_to :parent, class_name:  CONSTANTS[:COMMENT].to_s, optional: true
+  belongs_to :reply, class_name:  CONSTANTS[:COMMENT].to_s, optional: true
 
-  has_many :comments, foreign_key: 'parent_id', dependent: :destroy, inverse_of: :parent
+  has_many :replies, class_name: :Comment, foreign_key: :reply_id,  dependent: :destroy, inverse_of: :reply
   has_many :likes, as: :likeable, dependent: :destroy
   has_many :reports, as: :reportable, dependent: :destroy
 
@@ -14,5 +14,5 @@ class Comment < ApplicationRecord
 
   has_rich_text :content
 
-  scope :latest_comments, -> { order(updated_at: :desc).last(10) }
+  scope :latest, -> { order(updated_at: :desc).last(10) }
 end

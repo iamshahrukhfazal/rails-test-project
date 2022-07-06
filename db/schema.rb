@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_04_170235) do
+ActiveRecord::Schema.define(version: 2022_07_06_072237) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,12 +47,12 @@ ActiveRecord::Schema.define(version: 2022_07_04_170235) do
   end
 
   create_table "comments", force: :cascade do |t|
-    t.text "content"
+    t.string "content"
     t.bigint "user_id", null: false
     t.bigint "post_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "parent_id"
+    t.integer "reply_id"
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
@@ -62,26 +62,25 @@ ActiveRecord::Schema.define(version: 2022_07_04_170235) do
     t.bigint "likeable_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "likeable_type"
+    t.string "likeable_type", null: false
     t.index ["likeable_id"], name: "index_likes_on_likeable_id"
     t.index ["user_id", "likeable_id", "likeable_type"], name: "index_likes_on_user_id_and_likeable_id_and_likeable_type", unique: true
   end
 
   create_table "posts", force: :cascade do |t|
-    t.text "content"
-    t.string "links"
-    t.bigint "user_id"
+    t.string "content"
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "title", default: ""
+    t.string "title", default: "", null: false
     t.integer "status", default: 1
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
   create_table "reports", force: :cascade do |t|
-    t.string "reportable_type"
-    t.integer "reportable_id"
-    t.bigint "user_id"
+    t.string "reportable_type", null: false
+    t.integer "reportable_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "report_status", default: 1
@@ -90,10 +89,10 @@ ActiveRecord::Schema.define(version: 2022_07_04_170235) do
   end
 
   create_table "suggestions", force: :cascade do |t|
-    t.string "content"
+    t.string "content", null: false
     t.integer "status", default: 1
     t.bigint "user_id"
-    t.bigint "post_id"
+    t.bigint "post_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "message"

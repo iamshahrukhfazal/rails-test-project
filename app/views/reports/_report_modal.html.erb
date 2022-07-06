@@ -1,6 +1,6 @@
   <div class="modal fade" id="exampleModal<%=report.reportable.id%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <% all_reportee = Report.user_reported_post(report.reportable_id).order(updated_at: :desc)%>
+            <% all_reportee = Report.user_reported_posts(report.reportable_id).order(updated_at: :desc)%>
             <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Reported By</h5>

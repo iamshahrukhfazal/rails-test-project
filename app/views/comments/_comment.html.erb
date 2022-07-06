@@ -30,7 +30,7 @@
     <%= render partial:"comments/form", locals:{post:comment.post, parent:comment} %>
     <div class="sub-comments">
     <hr/>
-    <%=  render comment.comments%>
+    <%= render partial: "comments/comment", collection: comment.replies %>
     </div>
   </div>
 </div>

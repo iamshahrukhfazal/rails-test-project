@@ -8,60 +8,54 @@ class PostsController < ApplicationController
   # GET /posts or /posts.json
   def index
     authorize Post
-
-    if current_user.role.eql? 'user'
+    if current_user.role.eql? :user
       @pagy, @posts = pagy(Post.where(status: CONSTANTS[:PUBLISHED]), items: 5)
     else
       @posts = Post.all
     end
-    @post = Post.new
-    @suggestion = Suggestion.new
+    # @post = Post.new
+    # @suggestion = Suggestion.new
   end
 
   # GET /posts/1 or /posts/1.json
   def show
     authorize Post
-    @report = Report.new
-    @suggestion = Suggestion.new
-    @comment = Comment.new
-    authorize Post
   end
 
-  def edit; end
-
-  # GET /posts/new
+  # def edit; end
+  
   def new
     authorize Post
-    @post = Post.new
-    @post.user = current_user
+    @post = current_user.posts.new
   end
 
   # POST /posts or /posts.json
   def create
+    authorize Post
     @post = Post.new(post_params)
     @post.user = current_user
-    @post.status = 1
+    # refactor
+    @post.status = :unpublished
 
     respond_to do |format|
       if @post.save
         Rails.logger.debug 'save'
       else
         format.html { render :new, status: :unprocessable_entity }
-
       end
       format.js
     end
   end
 
-  # PATCH/PUT /posts/1 or /posts/1.json
+
   def update
+    authorize Post
     respond_to do |format|
       format.html { redirect_to post_url(@post), notice: t('errors.update_post') } if @post.update(post_params)
       format.js
     end
   end
 
-  # DELETE /posts/1 or /posts/1.json
   def destroy
     @post.destroy
     respond_to do |format|

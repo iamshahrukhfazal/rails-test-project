@@ -1,7 +1,7 @@
 function debounce(){
     $.ajax({
         type: "POST",
-        url: "/posts/searchpost",
+        url: "/reports/search_post",
         data: { post: { title:  $("#searchInput").val()} },
       })
 }

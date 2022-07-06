@@ -79,7 +79,7 @@
     <strong>
       <div id="post_comment">
         <div>
-              <%= render @post.comments.where(parent_id: nil).order(id: :desc)%>
+              <%= render @post.comments.where(reply_id: nil).order(id: :desc)%>
         </div>
       </div>
       <div>

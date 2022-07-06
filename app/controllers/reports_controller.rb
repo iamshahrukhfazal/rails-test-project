@@ -21,24 +21,22 @@ class ReportsController < ApplicationController
     authorize Report
     @post = @report.reportable
     @report.destroy
-
     respond_to do |format|
       format.js
     end
   end
 
   def all_reported_post
-    @reported_posts = Report.remove_post_duplicate
     authorize Report
+    @reported_posts = Report.remove_post_duplicate
   end
 
   def all_reported_comment
-    @reported_comments = Report.remove_comment_duplicate
     authorize Report
+    @reported_comments = Report.remove_comment_duplicate
   end
 
   private
-
   def set_report
     @report = current_user.reports.find(params[:id])
   end

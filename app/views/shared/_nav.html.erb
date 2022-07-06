@@ -14,7 +14,7 @@
             <%= link_to "All My Suggestion",suggestion_path(current_user.id),class:"nav-link" %>
           </li>
 
-          <li class="nav-item"><a class="nav-link" href="/userprofile">User Profile</a></li>
+          <li class="nav-item"><a class="nav-link" href="/users/user_profile">User Profile</a></li>
         <%end%>
       <%end%>
          <%if current_user && current_user.role==="admin"%>
@@ -22,11 +22,11 @@
          <%end%>
       <%if current_user && current_user.role==="moderator"%>
           <li class="nav-item">
-            <a class="nav-link" href="/reportedpost">Reported Post</a>
+            <a class="nav-link" href="<%= reported_post_reports_path%>">Reported Post</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="reportedcomment">Reported Comments</a>
+            <a class="nav-link" href="<%= reported_comment_reports_path%>">Reported Comments</a>
           </li>
       <%else%>
         <div></div>

@@ -2,7 +2,7 @@
     <%= render partial:"report_modal", locals:{report:reported_comment} %>
     <div class="modal fade" id="exampleModal<%=reported_comment.reportable.id%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <% all_reportee = Report.user_reported_post(reported_comment.reportable_id)%>
+            <% all_reportee = Report.user_reported_comments(reported_comment.reportable_id)%>
             <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Reported By</h5>

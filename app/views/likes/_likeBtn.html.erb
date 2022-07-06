@@ -1,6 +1,6 @@
 <div id="testing">
     <div id="likecount_<%=likeable.id%>_<%=likeable.user.id %>" class="mb-2" >
-        <% like = current_user.likes.find_by(likeable:likeable)%>
+        <% like = current_user.like_content.find_by(likeable:likeable)%>
         <%if like.nil?%>
             <%= form_tag( "/likes" , remote: true) do |f| %>
                 <input type="hidden" name="like[likeable_id]" value="<%= likeable.id%>">

@@ -9,13 +9,13 @@ class User < ApplicationRecord
 
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
-  has_many :likes, dependent: :destroy
+  has_many :like_content, class_name: :Like, dependent: :destroy
   has_many :reports, dependent: :destroy
   has_many :suggestions, dependent: :destroy
 
   enum role: { regular_user: 0, moderator: 1, admin: 2 }
 
   def set_default_role
-    role || :user
+      self.role = :regular_user if !role.nil?
   end
 end

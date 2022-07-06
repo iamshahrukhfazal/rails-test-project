@@ -5,7 +5,7 @@ class LikesController < ApplicationController
   before_action :set_post, only: %i[destroy]
 
   def create
-    @post = current_user.likes.new(like_params)
+    @post = current_user.like_content.new(like_params)
     respond_to do |format|
       if @post.save
         @like_class = (@post.likeable.class.to_s).eql?(CONSTANTS[:COMMENT])
@@ -27,7 +27,7 @@ class LikesController < ApplicationController
   private
 
   def set_post
-    @post = current_user.likes.find(params[:id])
+    @post = current_user.like_content.find(params[:id])
   end
 
   def like_params
