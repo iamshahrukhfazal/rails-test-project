@@ -2,6 +2,12 @@
 
 class RemoveLinksFromPost < ActiveRecord::Migration[5.2]
   def change
-    remove_column :posts, :links
+    reversible do |dir|
+      change_table :posts, bulk: true do |t|
+        dir.up do
+          t.remove_column :links
+        end
+      end
+    end
   end
 end

@@ -2,6 +2,12 @@
 
 class RemoveContentNullFromPost < ActiveRecord::Migration[5.2]
   def change
-    change_column :posts, :content, :string, null: true
+    reversible do |dir|
+      change_table :posts, bulk: true do |t|
+        dir.up do
+          t.string :content
+        end
+      end
+    end
   end
 end

@@ -3,7 +3,18 @@
 # Documentation for the Class
 class UpdateStatusPost < ActiveRecord::Migration[5.2]
   def change
-    remove_column :posts, :status
-    add_column :posts, :status, :integer, default: 1
+    reversible do |dir|
+      change_table :post, bulk: true do |t|
+        dir.up do
+          t.remove_column :status
+          t.add_column :status, :integer, default: 1
+        end
+
+        dir.down do
+          t.remove_column :status
+          t.add_column :status, :integer, default: 1
+        end
+      end
+    end
   end
 end

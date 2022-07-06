@@ -2,10 +2,14 @@
 
 class AddNotNullToPost < ActiveRecord::Migration[5.2]
   def change
-    change_column :posts, :title, :string, null: false
-    change_column :posts, :content, :string, null: false
-    change_column :posts, :user_id, :bigint, null: false
-
-    # Ex:- change_column("admin_users", "email", :string, :limit =>25)
+    reversible do |dir|
+      change_table :comments, bulk: true do |t|
+        dir.up do
+          t.string :title, null: false
+          t.bigint :user_id, null: false
+          t.string :content, null: false
+        end
+      end
+    end
   end
 end

@@ -2,6 +2,12 @@
 
 class AdddefaultstatusOfUser < ActiveRecord::Migration[5.2]
   def change
-    change_column :users, :role, :integer, default: 0
+    reversible do |dir|
+      change_table :users, bulk: true do |t|
+        dir.up do
+          t.integer :role
+        end
+      end
+    end
   end
 end

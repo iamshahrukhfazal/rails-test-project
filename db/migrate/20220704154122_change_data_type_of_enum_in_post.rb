@@ -2,9 +2,17 @@
 
 # Documentation for the Class
 class ChangeDataTypeOfEnumInPost < ActiveRecord::Migration[5.2]
-  def change
-    remove_column :posts, :status
-    add_column :posts, :status, :integer, default: 1
-    # Ex:- change_column("admin_users", "email", :string, :limit =>25)
+  reversible do |dir|
+    change_table :posts, bulk: true do |t|
+      dir.up do
+        t.remove_column :status
+        t.add_column :status, :integer
+      end
+
+      dir.down do
+        t.remove_column :status
+        t.add_column :status, :integer
+      end
+    end
   end
 end

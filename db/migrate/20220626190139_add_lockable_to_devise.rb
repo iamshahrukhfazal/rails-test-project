@@ -3,11 +3,11 @@
 # Service to download ftp files from the server
 class AddLockableToDevise < ActiveRecord::Migration[5.2]
   def change
-    add_column :users, :failed_attempts, :integer, default: 0, null: false # Only if lock strategy is :failed_attempts
-    add_column :users, :locked_at, :datetime
-
-    # Add these only if unlock strategy is :email or :both
-    add_column :users, :unlock_token, :string
-    add_index :users, :unlock_token, unique: true
+    change_table :users, bulk: true do |t|
+      t.integer :failed_attempts, default: 0, null: false
+      t.datetime :locked_at
+      t.string :unlock_token
+      t.add_index :unlock_token, unique: true
+    end
   end
 end

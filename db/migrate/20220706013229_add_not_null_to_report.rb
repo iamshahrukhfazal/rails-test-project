@@ -2,8 +2,14 @@
 
 class AddNotNullToReport < ActiveRecord::Migration[5.2]
   def change
-    change_column :reports, :reportable_type, :string, null: false
-    change_column :reports, :reportable_id, :integer, null: false
-    change_column :reports, :user_id, :bigint, null: false
+    reversible do |dir|
+      change_table :reports, bulk: true do |t|
+        dir.up do
+          t.string :reportable_type, null: false
+          t.integer :reportable_id, null: false
+          t.integer :user_id, null: false
+        end
+      end
+    end
   end
 end
