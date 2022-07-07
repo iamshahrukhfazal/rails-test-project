@@ -9,7 +9,6 @@ class CommentsController < ApplicationController
   end
 
   def create
-    # refactoring the code
     @comment = current_user.comments.new(comment_params)
     respond_to do |format|
       if @comment.save
