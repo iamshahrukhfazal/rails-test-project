@@ -5,7 +5,6 @@ class PostsController < ApplicationController
   before_action :set_post, only: %i[show update destroy]
   skip_before_action :verify_authenticity_token, only: %i[search]
 
-
   def index
     authorize Post
     if current_user.role.eql? :user
@@ -15,17 +14,14 @@ class PostsController < ApplicationController
     end
   end
 
-
   def show
     authorize Post
   end
-
 
   def new
     authorize Post
     @post = current_user.posts.new
   end
-
 
   def create
     authorize Post
@@ -68,6 +64,7 @@ class PostsController < ApplicationController
   end
 
   private
+
   def set_post
     @post = Post.find(params[:id])
   end

@@ -19,8 +19,6 @@ class ApplicationController < ActionController::Base
     redirect_to(request.referer || root_path)
   end
 
-
-
   CONSTANTS = {
     PUBLISHED: 'published',
     UNPUBLISHED: 'unpublished',
