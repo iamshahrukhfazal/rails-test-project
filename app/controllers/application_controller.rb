@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
     redirect_to(request.referer || root_path)
   end
 
-  add_flash_types :info, :danger, :warning
+
 
   CONSTANTS = {
     PUBLISHED: 'published',
