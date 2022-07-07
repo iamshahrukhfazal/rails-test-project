@@ -5,6 +5,7 @@ class LikesController < ApplicationController
   before_action :set_post, only: %i[destroy]
 
   def create
+    # constatize 
     @post = current_user.like_content.new(like_params)
     respond_to do |format|
       if @post.save

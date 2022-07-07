@@ -19,14 +19,11 @@ class PostsController < ApplicationController
     authorize Post
   end
 
-  # def edit; end
-
   def new
     authorize Post
     @post = current_user.posts.new
   end
 
-  # POST /posts or /posts.json
   def create
     authorize Post
     @post = Post.new(post_params)
