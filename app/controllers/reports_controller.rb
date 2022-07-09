@@ -6,9 +6,15 @@ class ReportsController < ApplicationController
 
   def create
     authorize Report
-    @report = current_user.reports.new(report_params)
+    # @report = current_user.reports.new(report_params)
+
+    @report = report_params[:reportable_type].constantize.find(report_params[:reportable_id]).reports.new(report_params)
+    @report.user_id= current_user.id
+
+
     respond_to do |format|
       if @report.save
+        @post = Report.find(id:@report.reportable_id)
         @post = @report.reportable
       else
         format.html { render :new, status: :unprocessable_entity }
