@@ -60,7 +60,7 @@ class SuggestionsController < ApplicationController
 
   def set_suggestion
     @suggestion = Suggestion.find(params[:id])
-  endz
+  end
 
   def set_user_suggestion
     @suggestion = current_user.suggestions.find(params[:id])

@@ -6,14 +6,14 @@ class LikesController < ApplicationController
   before_action :set_likeable, only: %i[create]
 
   def create
-    # constatize 
+    # constatize
     @like = @likeable.likes.new(like_params)
-    @like.user_id= current_user.id
-    
+    @like.user_id = current_user.id
+
     respond_to do |format|
       if @like.save
-        @post = Post.find(id:@like.likeable_id)
-        @like_class = (@post.likeable.class.to_s).eql?(CONSTANTS[:COMMENT])
+        @post = Post.find(id: @like.likeable_id)
+        # @like_class = (@post.likeable.class.to_s).eql?(CONSTANTS[:COMMENT])
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -34,6 +34,7 @@ class LikesController < ApplicationController
   def set_likeable
     @likeable = like_params[:likeable_type].constantize.find(like_params[:likeable_id])
   end
+
   def set_post
     @post = current_user.like_content.find(params[:id])
   end
