@@ -13,7 +13,7 @@ class LikesController < ApplicationController
     respond_to do |format|
       if @like.save
         @post = Post.find(id: @like.likeable_id)
-        @like_class = (@post.likeable.class.to_s).eql?(CONSTANTS[:COMMENT])
+        # @like_class = (@post.likeable.class.to_s).eql?(CONSTANTS[:COMMENT])
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -36,7 +36,8 @@ class LikesController < ApplicationController
   end
 
   def set_post
-    @post = current_user.like_content.find(params[:id])
+    # @post = current_user.like_content.find(params[:id])
+    @post = Like.find_by(id: params[:id], user_id: current_user.id)
   end
 
   def like_params
