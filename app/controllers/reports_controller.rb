@@ -3,7 +3,7 @@
 class ReportsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_report, only: %i[destroy]
-  before_action :set_reprtable, only: %i[create]
+  before_action :set_reportable, only: %i[create]
 
   def create
     authorize Report
@@ -44,7 +44,7 @@ class ReportsController < ApplicationController
 
   private
 
-  def set_likeable
+  def set_reportable
     @reportable = report_params[:reportable_type].constantize.find(report_params[:reportable_id])
   end
 

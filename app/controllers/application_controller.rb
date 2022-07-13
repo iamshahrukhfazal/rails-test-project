@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   private
 
   def record_not_found
-    flash[:alert] = 'Record not found.'
+    # flash[:alert] = 'Record not found.'
     redirect_to request.referer || root_path
   end
 

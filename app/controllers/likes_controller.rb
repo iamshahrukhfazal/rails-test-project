@@ -13,7 +13,7 @@ class LikesController < ApplicationController
     respond_to do |format|
       if @like.save
         @post = Post.find(id: @like.likeable_id)
-        # @like_class = (@post.likeable.class.to_s).eql?(CONSTANTS[:COMMENT])
+        @like_class = (@post.likeable.class.to_s).eql?(CONSTANTS[:COMMENT])
       else
         format.html { render :new, status: :unprocessable_entity }
       end
