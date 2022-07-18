@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     resources :comments, only: %i[create destroy]
     resources :suggestions
   end
+  # get '/aged', to: 'reports#all_reported_comment'
 
   root to: 'pages#home'
 end
