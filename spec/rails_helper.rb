@@ -69,4 +69,13 @@ RSpec.configure do |config|
       with.library :rails
     end
   end
+
+  config.expect_with :rspec do |c|
+    c.syntax = :expect
+  end
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Warden::Test::Helpers
+
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::IntegrationHelpers, type: :request
 end

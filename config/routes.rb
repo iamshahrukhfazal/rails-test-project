@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     end
   end
   resources :posts, shallow: true do
-    resources :comments, only: %i[create destroy]
+    resources :comments, only: %i[new create destroy]
     resources :suggestions
   end
   # get '/aged', to: 'reports#all_reported_comment'
