@@ -7,24 +7,23 @@ class ReportsController < ApplicationController
 
   def create
     authorize Report
-    # @report = current_user.reports.new(report_params)
 
     @report = @reportable.reports.new(report_params)
     @report.user_id = current_user.id
 
     respond_to do |format|
       if @report.save
-        @post = Report.find(id: @report.reportable_id)
+        # byebug
+        @post = Report.find_by(id: @report.reportable_id)
         @post = @report.reportable
-      else
-        format.html { render :new, status: :unprocessable_entity }
       end
       format.js
     end
   end
 
   def destroy
-    authorize Report
+    # authorize Report
+
     @post = @report.reportable
     @report.destroy
     respond_to do |format|
@@ -49,7 +48,11 @@ class ReportsController < ApplicationController
   end
 
   def set_report
-    @report = current_user.reports.find(params[:id])
+    # byebug
+
+    # @report = current_user.reports.find(params[:id])
+    @report = Report.find(params[:id])
+
   end
 
   def report_params

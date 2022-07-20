@@ -22,7 +22,7 @@ class LikesController < ApplicationController
   end
 
   def destroy
-    @like_class = (@post.likeable.class.to_s).eql?(CONSTANTS[:COMMENT])
+    @like_class = @post.likeable.class.to_s.eql?(CONSTANTS[:COMMENT])
     @post.destroy
     respond_to do |format|
       format.js
@@ -32,6 +32,7 @@ class LikesController < ApplicationController
   private
 
   def set_likeable
+    # Post and Comment
     @likeable = like_params[:likeable_type].constantize.find(like_params[:likeable_id])
   end
 

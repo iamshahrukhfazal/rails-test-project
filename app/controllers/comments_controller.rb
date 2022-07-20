@@ -9,6 +9,7 @@ class CommentsController < ApplicationController
   end
 
   def create
+  
     @comment = current_user.comments.new(comment_params)
     respond_to do |format|
       if @comment.save
@@ -34,6 +35,7 @@ class CommentsController < ApplicationController
   end
 
   def comment_params
+    
     params.require(:comment).permit(:content, :reply_id).merge(post_id: params[:post_id])
   end
 end

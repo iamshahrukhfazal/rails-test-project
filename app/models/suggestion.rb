@@ -7,5 +7,4 @@ class Suggestion < ApplicationRecord
   validates :content, presence: true
 
   enum status: { pending: 0, cancel: 1, approved: 2 }
-  
 end

@@ -20,8 +20,8 @@ class PostsController < ApplicationController
   end
 
   def new
-    authorize Post
     @post = current_user.posts.new
+    authorize Post
   end
 
   def create
@@ -30,9 +30,11 @@ class PostsController < ApplicationController
     @post.user = current_user
     @post.status = :unpublished
 
+  
     respond_to do |format|
+    
       if @post.save
-        Rails.logger.debug 'save'
+        format.html { render :new, status: 200 }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -49,11 +51,13 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    authorize Post
+    # authorize Post
+
 
     @post.destroy
     respond_to do |format|
-      format.js
+      # format.html { render :new, status: :unprocessable_entity }
+      format.js 
     end
   end
 
@@ -74,6 +78,6 @@ class PostsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def post_params
-    params.require(:post).permit(:content, :links, :status, :title)
+    params.require(:post).permit(:content, :title)
   end
 end
