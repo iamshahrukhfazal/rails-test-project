@@ -1,18 +1,27 @@
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
   before_action :set_post, only: %i[show update destroy]
   skip_before_action :verify_authenticity_token, only: %i[search]
 
   # GET /posts or /posts.json
   def index
-    authorize Post
-    if current_user.role.eql? :user
-      @pagy, @posts = pagy(Post.where(status: CONSTANTS[:PUBLISHED]), items: 5)
-    else
+    # authorize Post
+    # if current_user.role.eql? :user
+    #   @pagy, @posts = pagy(Post.where(status: CONSTANTS[:PUBLISHED]), items: 5)
+    # else
+    # byebug
       @posts = Post.all
+    # end
+    respond_to do |format|
+      format.html
+      format.json {render json: @posts.map{ |post| post.attributes.merge({ comments:post.comments.count, likes:post.likes.count, data:post.content,email:post.user.email })}}
+      # format.xml { render xml: @people }
     end
+
+    # @test.all.map{ |t| t.attributes.merge({ newatt: "added string" }) }
+    
     # @post = Post.new
     # @suggestion = Suggestion.new
   end
