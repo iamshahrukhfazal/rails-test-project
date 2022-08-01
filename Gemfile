@@ -17,6 +17,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 
 gem 'rails-i18n'
+gem 'active_model_serializers'
 
 gem 'pundit'
 # See https://github.com/rails/execjs#readme for more supported runtimes

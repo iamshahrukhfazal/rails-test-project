@@ -3,32 +3,39 @@
 class PostsController < ApplicationController
   # before_action :authenticate_user!
   before_action :set_post, only: %i[show update destroy]
+  # before_action :get_post, only: %i[show]
   skip_before_action :verify_authenticity_token, only: %i[search]
 
   # GET /posts or /posts.json
-  def index
-    # authorize Post
-    # if current_user.role.eql? :user
-    #   @pagy, @posts = pagy(Post.where(status: CONSTANTS[:PUBLISHED]), items: 5)
-    # else
-    # byebug
-      @posts = Post.all
-    # end
+  def index  
+    @posts = Post.all
     respond_to do |format|
       format.html
       format.json {render json: @posts.map{ |post| post.attributes.merge({ comments:post.comments.count, likes:post.likes.count, data:post.content,email:post.user.email })}}
-      # format.xml { render xml: @people }
     end
-
-    # @test.all.map{ |t| t.attributes.merge({ newatt: "added string" }) }
-    
-    # @post = Post.new
-    # @suggestion = Suggestion.new
   end
 
   # GET /posts/1 or /posts/1.json
   def show
-    authorize Post
+    # authorize Post
+    respond_to do |format|
+      format.html
+      format.json {
+        # merge Commente
+        render json: @post.attributes.merge(
+          {
+            content:@post.content,
+            likes:@post.likes.count,
+            liked_by:@post.likes,
+            comments:@post.comments.where(reply_id: nil).order(id: :desc).map{ |comment|
+               comment.attributes.merge(
+                  { likes:comment.likes.count,
+                    liked_by:comment.likes,
+
+                    replies:comment.replies.map{|reply|
+                       reply.attributes.merge({likes:reply.likes.count,liked_by:reply.likes,content:reply.content}) },
+                       content:comment.content })}})}
+    end
   end
 
   # def edit; end
