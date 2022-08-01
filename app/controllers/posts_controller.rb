@@ -5,7 +5,7 @@ class PostsController < ApplicationController
   before_action :set_post, only: %i[show update destroy]
   # before_action :get_post, only: %i[show]
   skip_before_action :verify_authenticity_token, only: %i[search]
-
+  
   # GET /posts or /posts.json
   def index  
     @posts = Post.all
