@@ -7,10 +7,10 @@ class LikesController < ApplicationController
 
   def create
     # byebug
-    @post = Like.new(like_params)
+    @like = Like.new(like_params)
     respond_to do |format|
-      if @post.save
-        @like_class = (@post.likeable.class.to_s).eql?(CONSTANTS[:COMMENT])
+      if @like.save
+        @like_class = (@like.likeable.class.to_s).eql?(CONSTANTS[:COMMENT])
         format.json { render json: get_post, status: :ok }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -45,9 +45,7 @@ class LikesController < ApplicationController
                       Comment.find_by(id: like_params[:likeable_id]).post
                     end
 
-  @current_post.to_json(include: :likes, include: { comments: {include: :replies}})
-
-
+    @current_post.to_json(include: :likes, include: { comments: { include: :replies } })
   end
 
   def like_params

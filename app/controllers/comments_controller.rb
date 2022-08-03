@@ -22,7 +22,7 @@ class CommentsController < ApplicationController
     respond_to do |format|
       if @comment.save
         @post = @comment.post
-        format.json {render json: @post.to_json(include: :likes, include: { comments: {include: :replies}})}
+        format.json { render json: @post.to_json(include: :likes, include: { comments: { include: :replies } }) }
       else
         format.html { render :new, status: :unprocessable_entity }
       end

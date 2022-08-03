@@ -1,7 +1,6 @@
 class PostSerializer < ActiveModel::Serializer
   attributes :id, :title, :status, :created_at, :content, :email, :likes, :comments
 
-
   def likes
     object.likes.count
   end
@@ -9,7 +8,7 @@ class PostSerializer < ActiveModel::Serializer
   def liked_by
     object.likes
   end
-  
+
   def comments
     object.comments.count
   end

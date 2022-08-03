@@ -12,17 +12,13 @@ class ApplicationController < ActionController::Base
 
   def record_not_found
     flash[:alert] = 'Record not found.'
-    if(params[:format])
-      respond_to do |format|       
-        format.json {render json:{status:400, message:"Data not found"}}
+    if params[:format]
+      respond_to do |format|
+        format.json { render json: { status: 404, message: 'Data not found' } }
       end
     else
       redirect_to request.referer || root_path
     end
-    
-
-    
-
   end
 
   def user_not_authorized
