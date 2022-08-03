@@ -10,7 +10,6 @@ class Post < ApplicationRecord
   has_many :suggestions, dependent: :destroy
 
   validates :content, :title, presence: true
-  # validates :title, presence: true
 
   has_rich_text :content
 

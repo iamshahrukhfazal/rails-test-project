@@ -8,21 +8,18 @@ class SuggestionsController < ApplicationController
 
   def show
     authorize Suggestion
-    # refactoring
     @my_suggestion = current_user.suggestions
   end
 
   def index
     authorize Suggestion
     @suggestions = @post.suggestions
-    # refactor
     @is_user_post = @post.user == current_user
   end
 
   def create
     authorize Suggestion
     @suggestion = current_user.suggestions.new(suggestion_params)
-    # refactor
     @suggestion.status = :pending
     respond_to do |format|
       if @suggestion.save
@@ -39,7 +36,6 @@ class SuggestionsController < ApplicationController
     @suggestion = Suggestion.find(params[:id])
     respond_to do |format|
       if @suggestion.update(suggestion_params)
-        Rails.logger.debug 'update'
       else
         format.html { render :edit, status: :unprocessable_entity }
       end

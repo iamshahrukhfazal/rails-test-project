@@ -5,10 +5,6 @@ class PostSerializer < ActiveModel::Serializer
     object.likes.count
   end
 
-  def liked_by
-    object.likes
-  end
-
   def comments
     object.comments.count
   end
