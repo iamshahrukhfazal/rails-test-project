@@ -3,20 +3,22 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_post, only: %i[show update destroy]
-  skip_before_action :verify_authenticity_token, only: %i[search]
+  before_action :get_post, only: %i[show]
+  skip_before_action :verify_authenticity_token
 
   def index
-    authorize Post
-    if current_user.role.eql? :user
-      @pagy, @posts = pagy(Post.where(status: CONSTANTS[:PUBLISHED]), items: 5)
-    else
-      @posts = Post.all
+    @posts = Post.includes(:likes, comments: :replies)
+    respond_to do |format|
+      format.html
+      format.json { render json: @posts, each_serializer: PostSerializer }
     end
   end
 
-  # GET /posts/1 or /posts/1.json
   def show
-    authorize Post
+    respond_to do |format|
+      format.html
+      format.json { render json: @post.to_json(include: :likes, include: { comments: { include: :replies } }) }      
+    end
   end
 
   def new
@@ -25,32 +27,35 @@ class PostsController < ApplicationController
   end
 
   def create
-    authorize Post
+    
     @post = Post.new(post_params)
-    @post.user = current_user
     @post.status = :unpublished
-
     respond_to do |format|
       if @post.save
-        Rails.logger.debug 'save'
+        format.json { render json: @post }
       else
         format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: { status: 404, message: 'Fail to create record' } }
       end
       format.js
     end
   end
 
   def update
-    authorize Post
+    
     respond_to do |format|
-      format.html { redirect_to post_url(@post), notice: t('errors.update_post') } if @post.update(post_params)
+      if @post.update(post_params)
+        format.json { render json: @post }
+        format.html { redirect_to post_url(@post), notice: t('errors.update_post') }
+      else
+        format.json { render json: { status: 204, message: 'Fail to update record' } }
+      end
       format.js
     end
   end
 
   def destroy
     authorize Post
-
     @post.destroy
     respond_to do |format|
       format.js
@@ -67,13 +72,11 @@ class PostsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_post
     @post = Post.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def post_params
-    params.require(:post).permit(:content, :links, :status, :title)
+    params.require(:post).permit(:content, :links, :status, :title, :user_id)
   end
 end

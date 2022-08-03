@@ -28,12 +28,20 @@
     </p>
     <div class="d-flex align-items-center">
       <%if current_user.role ==="regular_user"%>
-          <button type="button" class="btn btn-primary flex justify-center" data-toggle="modal" data-target="#suggestionModalCenter">
+          <%
+=begin%>
+ <button type="button" class="btn btn-primary flex justify-center" data-toggle="modal" data-target="#suggestionModalCenter">
               Create Suggestion 
-          </button>
+          </button> 
+<%
+=end%>
       <%else%>
       <%end%>
-      <div id="post_suggeston_counts"> (<a id="post_suggeston_count" href="<%= post_suggestions_path(@post) %>"><%= @post.suggestions.count%> Post Suggestion</a>)</div>
+      <%
+=begin%>
+ <div id="post_suggeston_counts"> (<a id="post_suggeston_count" href="<%= post_suggestions_path(@post) %>"><%= @post.suggestions.count%> Post Suggestion</a>)</div> 
+<%
+=end%>
     </div>
   </div>
 </div>
@@ -63,9 +71,13 @@
           <%=render partial: "likes/likeBtn", locals:{likeable:@post}%>
         </div>
       
-        <div id="report_<%= @post.id%>" >
+        <%
+=begin%>
+ <div id="report_<%= @post.id%>" >
             <%=  render partial:"reports/form", locals:{ reportable:@post }%>
-        </div>
+        </div> 
+<%
+=end%>
       </div>
   <%else%>
   <%end%>

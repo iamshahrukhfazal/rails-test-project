@@ -37,7 +37,6 @@ class SuggestionsController < ApplicationController
     @suggestion = Suggestion.find(params[:id])
     respond_to do |format|
       if @suggestion.update(suggestion_params)
-        Rails.logger.debug 'update'
       else
         format.html { render :edit, status: :unprocessable_entity }
       end

@@ -9,6 +9,8 @@
                 <div class="">
                     <%= f.rich_text_area :content, :class=>"form-control",input: post.id+rand(1..40000), id: `trix_first_description#{post.id}`, :rows=>"3", :value=>"test"%>
                 </div>
+                <input  type="hidden" name="comment[user_id]" value="<%= current_user.id%>">
+
                 <input type="submit" value="Submit" class="btn btn-primary d-block w-100 mt-3">
             </div>
         </div>

@@ -14,6 +14,8 @@
   <div class="field">
  
     <input hidden type="text" name="post[status]" value="<%=Post.statuses[1]%>"/>
+    <input hidden type="text" name="post[user_id]" value="<%=current_user.id%>"/>
+
   </div>
  <div class="actions">
     <%= form.submit :class=>"btn btn-primary w-100" %>

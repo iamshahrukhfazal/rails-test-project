@@ -21,9 +21,13 @@
     <%=render partial: "likes/likeBtn", locals:{likeable:comment}%>
     <div>
       <div class="d-inline">
-         <div id="report_<%= comment.id%>">
+         <%
+=begin%>
+ <div id="report_<%= comment.id%>">
             <%=  render partial:"reports/form", locals:{ reportable:comment }%>
-        </div>
+        </div> 
+<%
+=end%>
       </div>
     </div>
 

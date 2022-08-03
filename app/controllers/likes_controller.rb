@@ -3,19 +3,18 @@
 class LikesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_post, only: %i[destroy]
-  before_action :set_likeable, only: %i[create]
+
+  skip_before_action :verify_authenticity_token
 
   def create
-    # constatize
-    @like = @likeable.likes.new(like_params)
-    @like.user_id = current_user.id
-
+    @like = Like.new(like_params)
     respond_to do |format|
       if @like.save
-        @post = Post.find(id: @like.likeable_id)
-        # @like_class = (@post.likeable.class.to_s).eql?(CONSTANTS[:COMMENT])
+        @like_class = (@like.likeable.class.to_s).eql?(CONSTANTS[:COMMENT])
+        format.json { render json: get_post, status: :ok }
       else
         format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: { status: 404, message: 'Fail to create record' } }
       end
       format.js
     end
@@ -23,11 +22,16 @@ class LikesController < ApplicationController
 
   def destroy
     @like_class = (@post.likeable.class.to_s).eql?(CONSTANTS[:COMMENT])
-    @post.destroy
-    respond_to do |format|
-      format.js
+    if @post.destroy
+      respond_to do |format|
+        format.json { render json: get_post }
+        format.js
+      end
+    else
+      respond_to do |format|
+        format.json { render json: { status: 204, message: 'Fail to delete record' } }
+      end
     end
-  end
 
   private
 
@@ -36,11 +40,21 @@ class LikesController < ApplicationController
   end
 
   def set_post
-    # @post = current_user.like_content.find(params[:id])
-    @post = Like.find_by(id: params[:id], user_id: current_user.id)
+
+    @post = Like.find_by(user_id: like_params[:user_id], id: params[:id].to_i)
+  end
+
+  def get_post
+    @current_post = if like_params[:likeable_type] === 'Post'
+                      Post.find_by(id: like_params[:likeable_id])
+                    else
+                      Comment.find_by(id: like_params[:likeable_id]).post
+                    end
+    @current_post.to_json(include: :likes, include: { comments: { include: :replies } })
+
   end
 
   def like_params
-    params.require(:like).permit(:likeable_id, :likeable_type)
+    params.require(:like).permit(:likeable_id, :likeable_type, :user_id)
   end
 end

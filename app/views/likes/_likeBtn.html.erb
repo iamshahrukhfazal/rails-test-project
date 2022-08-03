@@ -5,6 +5,8 @@
             <%= form_tag( "/likes" , remote: true) do |f| %>
                 <input type="hidden" name="like[likeable_id]" value="<%= likeable.id%>">
                 <input type="hidden" name="like[likeable_type]" value="<%= likeable.class.to_s%>">
+                <input type="hidden" name="like[user_id]" value="<%= current_user.id%>">
+
                 <div class="d-flex like-cnt">
                     <div id="post_comment_<%=likeable.id%>" class="mr-2 like-cnt-div">
                         <% likes=likeable.likes.count%>
@@ -24,6 +26,7 @@
                     <div id="post_comment_<%=likeable.id%>" class="mr-2 like-cnt-div">
                         <%= likeable.likes.count%> 
                     </div>
+                    <input type="hidden" name="like[user_id]" value="<%= current_user.id%>">
                     <input type="submit" value="Unlike" class="btn btn-danger">
                 </div>
             <% end %>

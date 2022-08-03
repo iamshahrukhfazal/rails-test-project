@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resource :users do
     get '/user_profile', to: 'users#user_profile'
   end
-  resources :likes, only: %i[create destroy]
+  resources :likes, only: %i[create destroy index]
   resource :reports, only: %i[create destroy] do
     collection do
       get '/reported_post', to: 'reports#all_reported_post'
@@ -15,9 +15,10 @@ Rails.application.routes.draw do
     end
   end
   resources :posts, shallow: true do
-    resources :comments, only: %i[create destroy]
+    resources :comments, only: %i[create destroy index show]
     resources :suggestions
   end
+  get '/comments/:id', to: 'comments#index'
 
   root to: 'pages#home'
 end
