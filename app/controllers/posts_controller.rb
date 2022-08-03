@@ -8,19 +8,21 @@ class PostsController < ApplicationController
   
   # GET /posts or /posts.json
   def index  
+    # byebug
     @posts = Post.all
     respond_to do |format|
       format.html
-      format.json {render json: @posts.map{ |post| post.attributes.merge({ comments:post.comments.count, likes:post.likes.count, data:post.content,email:post.user.email })}}
+      format.json {render json: @posts, each_serializer: PostSerializer}
     end
   end
                                        
   # GET /posts/1 or /posts/1.json
   def show
     # authorize Post
+    # byebug
     respond_to do |format|
       format.html                
-      format.json {render json: get_data}
+      format.json {render json: @post.to_json(include: :likes, include: { comments: {include: :replies}})}
     end
   end
 
@@ -92,40 +94,19 @@ class PostsController < ApplicationController
     params.require(:post).permit(:content, :links, :status, :title,:user_id)
   end
 
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  def get_data
-    @post.attributes.merge(
-      {
-        content:@post.content,
-        likes:@post.likes.count,
-        liked_by:@post.likes,
-        comments:@post.comments.where(reply_id: nil).order(id: :desc).map{ |comment|
-           comment.attributes.merge(
-              { likes:comment.likes.count,
-                liked_by:comment.likes,
-
-                replies:comment.replies.map{|reply|
-                   reply.attributes.merge({likes:reply.likes.count,liked_by:reply.likes,content:reply.content}) },
-                   content:comment.content })}})
-  end
+  # def get_data
+  #   @post.attributes.merge(
+  #     {
+  #       content:@post.content,
+  #       likes:@post.likes.count,
+  #       liked_by:@post.likes,
+  #       comments:@post.comments.where(reply_id: nil).order(id: :desc).map{ |comment|
+  #          comment.attributes.merge(
+  #             { likes:comment.likes.count,
+  #               liked_by:comment.likes,
+  #               replies_count:comment.replies.count,
+  #               replies:comment.replies.map{|reply|
+  #                  reply.attributes.merge({likes:reply.likes.count,liked_by:reply.likes,content:reply.content}) },
+  #                  content:comment.content })}})
+  # end
 end

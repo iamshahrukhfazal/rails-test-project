@@ -11,7 +11,7 @@ class LikesController < ApplicationController
     respond_to do |format|
       if @post.save
         @like_class = (@post.likeable.class.to_s).eql?(CONSTANTS[:COMMENT])
-        format.json {render json: get_post}
+        format.json { render json: get_post, status: :ok }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -20,42 +20,36 @@ class LikesController < ApplicationController
   end
 
   def destroy
-
     @like_class = (@post.likeable.class.to_s).eql?(CONSTANTS[:COMMENT])
     @post.destroy
-    respond_to do |format|
-      format.json {render json: get_post}
+    rb espond_to do |format|
+      format.json { render json: get_post }
       format.js
+    end
+  rescue Exception => e
+    respond_to do |format|
+      format.json { render json: { status: 404, message: 'Record not found' } }
     end
   end
 
   private
-  def set_post
-    @post = Like.find_by(user_id:like_params[:user_id],id:params[:id].to_i)
 
+  def set_post
+    @post = Like.find_by(user_id: like_params[:user_id], id: params[:id].to_i)
   end
 
   def get_post
+    @current_post = if like_params[:likeable_type] === 'Post'
+                      Post.find_by(id: like_params[:likeable_id])
+                    else
+                      Comment.find_by(id: like_params[:likeable_id]).post
+                    end
 
-    if(like_params[:likeable_type]==="Post")
-      @current_post = Post.find_by(id: like_params[:likeable_id])
-    else
-      @current_post = Comment.find_by(id: like_params[:likeable_id]).post
-    end
+  @current_post.to_json(include: :likes, include: { comments: {include: :replies}})
 
-    @current_post.attributes.merge(
-      {
-        content:@current_post.content,
-        likes:@current_post.likes.count,
-        liked_by:@current_post.likes,
-        comments:@current_post.comments.where(reply_id: nil).order(id: :desc).map{ |comment|
-           comment.attributes.merge(
-              { likes:comment.likes.count,
-                liked_by:comment.likes,
-                replies:comment.replies.map{|reply|
-                   reply.attributes.merge({likes:reply.likes.count,liked_by:reply.likes,content:reply.content}) },
-                   content:comment.content })}})
+
   end
+
   def like_params
     params.require(:like).permit(:likeable_id, :likeable_type, :user_id)
   end

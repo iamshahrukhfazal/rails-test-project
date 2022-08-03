@@ -5,20 +5,24 @@ class CommentsController < ApplicationController
   before_action :set_comment, only: %i[destroy]
   skip_before_action :verify_authenticity_token
 
-
   def new
     @comment = Comment.new
   end
 
+  # replace it with show
+  def show
+    @comment = Comment.find(params['id'].to_i)
+    render json: @comment
+  end
+
   def create
     # refactoring the code
-   
+
     @comment = Comment.new(comment_params)
     respond_to do |format|
       if @comment.save
         @post = @comment.post
-     
-        format.json {render json: get_post}
+        format.json {render json: @post.to_json(include: :likes, include: { comments: {include: :replies}})}
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -39,22 +43,18 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
   end
 
-  def get_post
-    @post.attributes.merge(
-      {
-        content:@post.content,
-        likes:@post.likes.count,
-        liked_by:@post.likes,
-        comments:@post.comments.where(reply_id: nil).order(id: :desc).map{ |comment|
-           comment.attributes.merge(
-              { likes:comment.likes.count,
-                liked_by:comment.likes,
-                replies:comment.replies.map{|reply|
-                   reply.attributes.merge({likes:reply.likes.count,liked_by:reply.likes,content:reply.content}) },
-                   content:comment.content })}})
-  end
+  # def get_post
+  #   @post.attributes.merge(
+  #     {
+  #       content: @post.content,
+  #       likes: @post.likes.count,
+  #       liked_by: @post.likes,
+  #       comments: @post.comments.where(reply_id: nil).order(id: :desc)
+  #     }
+  #   )
+  # end
 
   def comment_params
-    params.require(:comment).permit(:content, :reply_id,:user_id).merge(post_id: params[:post_id])
+    params.require(:comment).permit(:content, :reply_id, :user_id).merge(post_id: params[:post_id])
   end
 end
