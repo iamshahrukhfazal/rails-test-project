@@ -2,8 +2,14 @@
 
 class AddNotNullToSuggestion < ActiveRecord::Migration[5.2]
   def change
-    change_column :suggestions, :content, :string, null: false
-    change_column :suggestions, :post_id, :bigint, null: false
-    change_column :suggestions, :message, :string, null: false
+    reversible do |dir|
+      change_table :suggestions, bulk: true do |t|
+        dir.up do
+          t.string :content, null: false
+          t.bigint :post_id, null: false
+          t.string :message, null: false
+        end
+      end
+    end
   end
 end

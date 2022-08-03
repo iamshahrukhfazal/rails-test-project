@@ -9,7 +9,7 @@ class User < ApplicationRecord
 
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
-  has_many :like_content, class_name: :Like, dependent: :destroy
+  # has_many :like_content, class_name: :Like, dependent: :destroy
   has_many :reports, dependent: :destroy
   has_many :suggestions, dependent: :destroy
 

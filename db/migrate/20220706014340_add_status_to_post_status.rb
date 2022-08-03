@@ -2,6 +2,12 @@
 
 class AddStatusToPostStatus < ActiveRecord::Migration[5.2]
   def change
-    add_column :posts, :status, :integer, default: 1
+    reversible do |dir|
+      change_table :posts, bulk: true do |t|
+        dir.up do
+          t.string :status
+        end
+      end
+    end
   end
 end

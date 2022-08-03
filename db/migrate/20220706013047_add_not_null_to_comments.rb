@@ -2,7 +2,13 @@
 
 class AddNotNullToComments < ActiveRecord::Migration[5.2]
   def change
-    change_column :comments, :content, :string, null: false
-    change_column :comments, :reply_id, :integer, null: false
+    reversible do |dir|
+      change_table :comments, bulk: true do |t|
+        dir.up do
+          t.string :content, null: false
+          t.integer :reply_id, null: false
+        end
+      end
+    end
   end
 end

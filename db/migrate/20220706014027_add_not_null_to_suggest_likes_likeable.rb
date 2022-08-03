@@ -2,6 +2,12 @@
 
 class AddNotNullToSuggestLikesLikeable < ActiveRecord::Migration[5.2]
   def change
-    change_column :likes, :likeable_type, :string, null: false
+    reversible do |dir|
+      change_table :likes, bulk: true do |t|
+        dir.up do
+          t.string :likeable_type, null: false
+        end
+      end
+    end
   end
 end

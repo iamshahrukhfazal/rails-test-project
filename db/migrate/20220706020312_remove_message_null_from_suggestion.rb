@@ -2,6 +2,12 @@
 
 class RemoveMessageNullFromSuggestion < ActiveRecord::Migration[5.2]
   def change
-    change_column :suggestions, :message, :string, null: true
+    reversible do |dir|
+      change_table :suggestions, bulk: true do |t|
+        dir.up do
+          t.string :message
+        end
+      end
+    end
   end
 end

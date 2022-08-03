@@ -3,12 +3,18 @@
 class ReportsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_report, only: %i[destroy]
+  before_action :set_reportable, only: %i[create]
 
   def create
     authorize Report
-    @report = current_user.reports.new(report_params)
+    # @report = current_user.reports.new(report_params)
+
+    @report = @reportable.reports.new(report_params)
+    @report.user_id = current_user.id
+
     respond_to do |format|
       if @report.save
+        @post = Report.find(id: @report.reportable_id)
         @post = @report.reportable
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -37,6 +43,10 @@ class ReportsController < ApplicationController
   end
 
   private
+
+  def set_reportable
+    @reportable = report_params[:reportable_type].constantize.find(report_params[:reportable_id])
+  end
 
   def set_report
     @report = current_user.reports.find(params[:id])

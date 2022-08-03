@@ -1,4 +1,4 @@
-<%if(@like_class)%>
+<%if((@post.likeable.class.to_s).eql?(CONSTANTS[:COMMENT]))%>
     $("#post_comment").empty().append(`<%= j render @post.likeable.post.comments.where(reply_id: nil).order(id: :desc)%>`);
 <%else%>
     $("#likecount_<%=@post.likeable.id%>_<%=@post.likeable.user.id%>").empty().append(`<%= j render partial: "likes/likeBtn", locals:{likeable:@post.likeable}%>`);

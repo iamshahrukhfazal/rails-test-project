@@ -18,15 +18,13 @@ class ApplicationController < ActionController::Base
       end
     else
       redirect_to request.referer || root_path
-    end
+
   end
 
   def user_not_authorized
     flash[:alert] = 'You are not authorized to perform this action.'
     redirect_to(request.referer || root_path)
   end
-
-  add_flash_types :info, :danger, :warning
 
   CONSTANTS = {
     PUBLISHED: 'published',

@@ -3,6 +3,7 @@
 class LikesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_post, only: %i[destroy]
+
   skip_before_action :verify_authenticity_token
 
   def create
@@ -34,7 +35,12 @@ class LikesController < ApplicationController
 
   private
 
+  def set_likeable
+    @likeable = like_params[:likeable_type].constantize.find(like_params[:likeable_id])
+  end
+
   def set_post
+
     @post = Like.find_by(user_id: like_params[:user_id], id: params[:id].to_i)
   end
 
@@ -45,6 +51,7 @@ class LikesController < ApplicationController
                       Comment.find_by(id: like_params[:likeable_id]).post
                     end
     @current_post.to_json(include: :likes, include: { comments: { include: :replies } })
+
   end
 
   def like_params
